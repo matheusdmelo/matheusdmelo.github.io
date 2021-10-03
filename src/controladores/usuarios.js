@@ -42,7 +42,7 @@ const cadastrarUsuario = async (req, res) => {
 }
 
 const obterPerfil = async (req, res) => {
-
+    console.log(req.usuario);
 }
 
 const atualizarPerfil = async (req, res) => {

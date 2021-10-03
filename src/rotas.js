@@ -2,7 +2,7 @@ const express = require('express');
 const usuarios = require('./controladores/usuarios');
 const login = require('./controladores/login');
 const clientes = require('./controladores/clientes');
-// const verificaLogin = require('./filtros/verificalogin');
+const verificaLogin = require('./filtros/verificalogin');
 
 const rotas = express();
 
@@ -13,7 +13,7 @@ rotas.post('/usuarios', usuarios.cadastrarUsuario),
 rotas.post('/login', login.login);
 
 // filtro para verificar usuario logado
-// rotas.use(verificaLogin);
+rotas.use(verificaLogin);
 
 // obter e atualizar perfil do usuario
 rotas.get('/perfil', usuarios.obterPerfil);
