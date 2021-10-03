@@ -19,7 +19,7 @@ rotas.use(verificaLogin);
 rotas.get('/perfil', usuarios.obterPerfil);
 rotas.put('/perfil', usuarios.atualizarPerfil);
 
-//crud de clientes
+// crud de clientes
 rotas.get('/clientes', clientes.listarClientes.);
 rotas.get('/clientes/:id', clientes.obterCliente.);
 rotas.post('/clientes', clientes.cadastrarCliente.);
