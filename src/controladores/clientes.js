@@ -1,10 +1,36 @@
 const conexao = require('../conexao');
 
 const listarClientes = async (req, res) => {
+    const { usuario } = req;
 
+    try {
+        const query = 'select * from clientes where usuario_id = $1';
+        const { rows: clientes } = await conexao.query(query, [usuario.id]);
+
+        return res.status(200).json(clientes);
+
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
 }
 
 const obterCliente = async (req, res) => {
+    const { usuario } = req;
+    const { id } = req.params
+
+    try {
+        const query = 'select * from clientes where usuario_id = $1 and id = $2';
+        const { rows, rowCount } = await conexao.query(query, [usuario.id, id]);
+
+        if (rowCount === 0) {
+            return res.status(404).json('Cliente não encontrado');
+        }
+
+        return res.status(200).json(rows[0]);
+
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
 
 }
 
