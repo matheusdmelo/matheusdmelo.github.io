@@ -2,7 +2,7 @@ const express = require('express');
 const usuarios = require('./controladores/usuarios');
 const login = require('./controladores/login');
 const clientes = require('./controladores/clientes');
-const verificaLogin = require('./filtros/verificalogin');
+const verificaLogin = require('./filtros/verificaLogin');
 
 const rotas = express();
 

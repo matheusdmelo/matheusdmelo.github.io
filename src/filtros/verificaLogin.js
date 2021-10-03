@@ -2,7 +2,7 @@ const conexao = require('../conexao');
 const jwt = require('jsonwebtoken');
 const senhaHash = require('../senhaHash');
 
-const verificaLogin = async (req, res) => {
+const verificaLogin = async (req, res, next) => {
     const { authorization } = req.headers;
 
     if (!authorization) {
@@ -21,10 +21,11 @@ const verificaLogin = async (req, res) => {
             return res.status(404).json('Usuario não encontrado');
         }
 
-        const { senha, ...usuario} = rows[0];
+        const { senha, ...usuario } = rows[0];
     
         req.usuario = usuario;
-
+        
+        next();        
     } catch (error) {
         return res.status(400).json(error.message);
     }
