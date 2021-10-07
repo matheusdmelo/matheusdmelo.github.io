@@ -159,16 +159,16 @@ const atuaizarCliente = async (req, res) => {
         const valores = Object.values(body);
         valores.push(id);
         valores.push(req.usuario.id);
-        const query = `update clientes set ${params.join(', ')} where id = $${n} and usuario_id = $${n + 1}`;
-        const clienteAtualizado = await conexao.query(query, valores);
+        const queryAtualizacao = `update clientes set ${params.join(', ')} where id = $${n} and usuario_id = $${n + 1}`;
+        const clienteAtualizado = await conexao.query(queryAtualizacao, valores);
 
         if (clienteAtualizado.rowCount === 0) {
-            return res.status(400).json("O usuario não foi atualizado");
+            return res.status(400).json("O cliente não foi atualizado");
         }
 
-        return res.status(200).json("O usuario foi atualizado com sucesso");
+        return res.status(200).json("O cliente foi atualizado com sucesso");
 
-        return res.status(200).json(rows[0]);
+        
 
     } catch (error) {
         return res.status(400).json(error.message);
