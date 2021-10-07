@@ -71,8 +71,112 @@ const cadastrarCliente = async (req, res) => {
 }
 
 const atuaizarCliente = async (req, res) => {
+    const { usuario } = req;
+    const { id } = req.params
+    const {nome, email, cpf, telefone, cep, logradouro, complemento, bairro, cidade, estado, ponto_de_referencia} = req.body;
+
+    if(!nome && !email && !cpf && !telefone && !cep && !logradouro && !complemento && !bairro && !cidade && !estado && !ponto_de_referencia) {
+        return res.status(404).json('Informe ao menos um campo para atualizar');
+    }
+    try {
+        const query = 'select * from clientes where usuario_id = $1 and id = $2';
+        const { rowCount } = await conexao.query(query, [usuario.id, id]);
+
+        if (rowCount === 0) {
+            return res.status(404).json('Cliente não encontrado');
+        }
+       
+        const body = {};
+        const params = [];
+        let n = 1;
+
+        if (nome) {
+            body.nome = nome;
+            params.push(`nome = $${n}`);
+            n++
+        }
+
+        if (email) {
+            body.email = email;
+            params.push(`email = $${n}`);
+            n++
+        }
+
+        if (cpf) {
+            body.cpf = cpf;
+            params.push(`cpf = $${n}`);
+            n++
+        }
+
+        if (telefone) {
+            body.telefone = telefone;
+            params.push(`telefone = $${n}`);
+            n++
+        }
+
+        if (cep) {
+            body.cep = cep;
+            params.push(`cep = $${n}`);
+            n++
+        }
+
+        if (logradouro) {
+            body.logradouro = logradouro;
+            params.push(`logradouro = $${n}`);
+            n++
+        }
+
+        if (complemento) {
+            body.complemento = complemento;
+            params.push(`complemento = $${n}`);
+            n++
+        }
+
+        if (bairro) {
+            body.bairro = bairro;
+            params.push(`bairro = $${n}`);
+            n++
+        }
+
+        if (cidade) {
+            body.cidade = cidade;
+            params.push(`cidade = $${n}`);
+            n++
+        }
+
+        if (estado) {
+            body.estado = estado;
+            params.push(`estado = $${n}`);
+            n++
+        }
+
+        if (ponto_de_referencia) {
+            body.ponto_de_referencia = ponto_de_referencia;
+            params.push(`ponto_de_referencia = $${n}`);
+            n++
+        }
+        
+        const valores = Object.values(body);
+        valores.push(id);
+        valores.push(req.usuario.id);
+        const query = `update clientes set ${params.join(', ')} where id = $${n} and usuario_id = $${n + 1}`;
+        const clienteAtualizado = await conexao.query(query, valores);
+
+        if (clienteAtualizado.rowCount === 0) {
+            return res.status(400).json("O usuario não foi atualizado");
+        }
+
+        return res.status(200).json("O usuario foi atualizado com sucesso");
+
+        return res.status(200).json(rows[0]);
+
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
 
 }
+
+
 
 const excluirCliente = async (req, res) => {
 
