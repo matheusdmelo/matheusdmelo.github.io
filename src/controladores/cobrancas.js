@@ -16,9 +16,9 @@ const listarCobrancas = async (req, res) => {
 
 const cadastrarCobranca = async (req, res) => {
     const { usuario } = req;
-    const {cliente_id, usuario_id, descricao, status, valor, vencimento} = req.body;
+    const {cliente_id, descricao, status, valor, vencimento} = req.body;
 
-    if (!cliente_id || !usuario_id) {
+    if (!cliente_id) {
         return res.status(404).json('O campo cliente é obrigatorio');
     }                             
 
