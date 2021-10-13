@@ -40,7 +40,7 @@ const cadastrarCobranca = async (req, res) => {
 
 
     try {
-        const query = 'insert into cobrancas (cliente_id, usuario.id, descricao, status, valor, vencimento) values ($1, $2, $3, $4, $5, $6)';        
+        const query = 'insert into cobrancas (cliente_id, descricao, status, valor, vencimento) values ($1, $2, $3, $4, $5,)';        
         const cobranca = await conexao.query(query, [cliente_id, usuario.id, descricao, status, valor, vencimento]);
         
         if (cobranca.rowCount === 0) {
