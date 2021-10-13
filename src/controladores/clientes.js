@@ -79,6 +79,13 @@ const atuaizarCliente = async (req, res) => {
         return res.status(404).json('Informe ao menos um campo para atualizar');
     }
     try {
+
+        const { rowCount: quantidadeUsuarios } = await conexao.query('select * from clientes where email = $1 and cpf = $2', [email, cpf]);
+
+        if (quantidadeUsuarios > 0) {
+            return res.status(400).json("O email/cpf já foi cadastrado em outro cliente");
+        }
+
         const query = 'select * from clientes where usuario_id = $1 and id = $2';
         const { rowCount } = await conexao.query(query, [usuario.id, id]);
 
