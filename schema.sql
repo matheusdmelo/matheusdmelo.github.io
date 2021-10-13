@@ -29,15 +29,15 @@ drop table if exists cobrancas;
 
 create table cobrancas (
   	id serial primary key,
-  	cliente_id integer not null,
+  	cliente_id integer not null references clientes(id),
   	usuario_id integer not null,
 	descricao text not null,
   	status boolean not null,
   	valor bigint not null,
   	vencimento date not null,
-  	foreign key (cliente_id) references clientes (id),
-  	foreign key (usuario_id) references usuarios (id)
+  	foreign key (usuario_id) references usuarios(id)
 );
+
 
 
 
