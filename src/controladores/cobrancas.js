@@ -4,7 +4,7 @@ const listarCobrancas = async (req, res) => {
     const { usuario } = req;
 
     try {
-        const query = 'select * from cobrancas join clientes.nome where usuario_id = $1';
+        const query = 'select cobrancas.*, clientes.nome from cobrancas join clientes on clientes.id = cobrancas.cliente_id where usuario_id = $1';
         const { rows: cobrancas } = await conexao.query(query, [usuario.id]);
 
         return res.status(200).json(cobrancas);
