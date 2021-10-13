@@ -20,7 +20,7 @@ const cadastrarCobranca = async (req, res) => {
 
     if (!cliente_id) {
         return res.status(404).json('O campo cliente é obrigatorio');
-    }
+    }                             
 
     if (!descricao) {
         return res.status(404).json('O campo descrição é obrigatorio');
@@ -40,7 +40,7 @@ const cadastrarCobranca = async (req, res) => {
 
 
     try {
-        const query = 'insert into cobrancas (cliente_id, usuario_id, descricao, status, valor, vencimento) values ($1, $2, $3, $4, $5, $6)';        
+        const query = 'insert into cobrancas (cliente_id, descricao, status, valor, vencimento) values ($1, $2, $3, $4, $5, $6)';        
         const cobranca = await conexao.query(query, [cliente.id, usuario.id, descricao, status, valor, vencimento]);
         
         if (cobranca.rowCount === 0) {
