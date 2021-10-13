@@ -15,7 +15,7 @@ const listarCobrancas = async (req, res) => {
 }
 
 const cadastrarCobranca = async (req, res) => {
-    const { usuario, cliente } = req;
+    const { cliente } = req;
     const {cliente_id, usuario_id, descricao, status, valor, vencimento} = req.body;
 
     if (!cliente_id || !usuario_id) {
