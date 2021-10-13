@@ -80,7 +80,7 @@ const atuaizarCliente = async (req, res) => {
     }
     try {
 
-        const { rowCount: quantidadeUsuarios } = await conexao.query('select * from clientes where email = $1 and cpf = $2', [email, cpf]);
+        const { rowCount: quantidadeUsuarios } = await conexao.query('select * from clientes where email = $1 or cpf = $2', [email, cpf]);
 
         if (quantidadeUsuarios > 0) {
             return res.status(400).json("O email/cpf já foi cadastrado em outro cliente");
