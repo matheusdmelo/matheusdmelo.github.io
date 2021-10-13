@@ -15,7 +15,7 @@ const listarCobrancas = async (req, res) => {
 }
 
 const cadastrarCobranca = async (req, res) => {
-    const { cliente } = req;
+    const { usuario } = req;
     const {cliente_id, usuario_id, descricao, status, valor, vencimento} = req.body;
 
     if (!cliente_id || !usuario_id) {
@@ -41,7 +41,7 @@ const cadastrarCobranca = async (req, res) => {
 
     try {
         const query = 'insert into cobrancas (cliente_id, usuario_id, descricao, status, valor, vencimento) values ($1, $2, $3, $4, $5, $6)';        
-        const cobranca = await conexao.query(query, [cliente.id, usuario.id, descricao, status, valor, vencimento]);
+        const cobranca = await conexao.query(query, [cliente_id, usuario.id, descricao, status, valor, vencimento]);
         
         if (cobranca.rowCount === 0) {
             return res.status(400).json('A cobrança não foi cadastrada');
