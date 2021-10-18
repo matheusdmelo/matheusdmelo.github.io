@@ -30,7 +30,7 @@ rotas.delete('/clientes/:id', clientes.excluirCliente);
 // crud de cobranças
 rotas.post('/cobrancas', cobrancas.cadastrarCobranca);
 rotas.get('/cobrancas', cobrancas.listarCobrancas);
-rotas.patch('/cobrancas/:id', cobrancas.atualizarCobranca)
+rotas.patch('/cobrancas/:id', cobrancas.atualizarCobranca);
 
 
 

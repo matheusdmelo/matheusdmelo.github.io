@@ -118,7 +118,6 @@ const atualizarCobranca = async (req, res) => {
 
         return res.status(200).json("A cobrança foi atualizada com sucesso");
 
-        
 
     } catch (error) {
         return res.status(400).json(error.message);
