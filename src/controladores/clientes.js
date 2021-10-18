@@ -55,6 +55,13 @@ const cadastrarCliente = async (req, res) => {
     }
 
     try {
+
+        const { rowCount: quantidadeUsuarios } = await conexao.query('select * from clientes where email = $1', [email]);
+
+        if (quantidadeUsuarios > 0) {
+            return res.status(400).json("O email já foi cadastrado em outro cliente");
+        }
+
         const query = 'insert into clientes (usuario_id, nome, email, cpf, telefone, cep, logradouro, complemento, bairro, cidade, estado, ponto_de_referencia) values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)';        
         const cliente = await conexao.query(query, [usuario.id, nome, email, cpf, telefone, cep, logradouro, complemento, bairro, cidade, estado, ponto_de_referencia]);
         

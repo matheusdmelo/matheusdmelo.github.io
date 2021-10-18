@@ -24,12 +24,13 @@ rotas.put('/perfil', usuarios.atualizarPerfil);
 rotas.get('/clientes', clientes.listarClientes);
 rotas.get('/clientes/:id', clientes.obterCliente);
 rotas.post('/clientes', clientes.cadastrarCliente);
-rotas.put('/clientes/:id', clientes.atuaizarCliente);
+rotas.patch('/clientes/:id', clientes.atuaizarCliente);
 rotas.delete('/clientes/:id', clientes.excluirCliente);
 
 // crud de cobranças
 rotas.post('/cobrancas', cobrancas.cadastrarCobranca);
 rotas.get('/cobrancas', cobrancas.listarCobrancas);
+rotas.patch('/cobrancas/:id', cobrancas.atualizarCobranca)
 
 
 
