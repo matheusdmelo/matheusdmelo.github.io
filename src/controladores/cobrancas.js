@@ -55,12 +55,11 @@ const cadastrarCobranca = async (req, res) => {
 }
 
 const excluirCobranca = async (req, res) => {
-    const { cliente } = req;
     const { id } = req.params
 
     try {
-        const query = 'select * from cobrancas where cliente_id = $1 and id = $2';
-        const { rowCount } = await conexao.query(query, [cliente.id, id]);
+        const query = 'select * from cobrancas where id = $1';
+        const { rowCount } = await conexao.query(query, [id]);
 
         if (rowCount === 0) {
             return res.status(404).json('Cobrança não encontrada');
