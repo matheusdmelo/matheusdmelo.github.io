@@ -80,7 +80,6 @@ const excluirCobranca = async (req, res) => {
 }
 
 const atuaizarCobranca = async (req, res) => {
-    const { cliente } = req;
     const { id } = req.params;
     const {cliente_id, descricao, status, valor, vencimento} = req.body;
 
@@ -89,8 +88,8 @@ const atuaizarCobranca = async (req, res) => {
     }
     try {
 
-        const query = 'select * from cobrancas where cliente_id = $1 and id = $2';
-        const { rowCount } = await conexao.query(query, [cliente.id, id]);
+        const query = 'select * from cobrancas where id = $1';
+        const { rowCount } = await conexao.query(query, [id]);
 
         if (rowCount === 0) {
             return res.status(404).json('Cobrança não encontrada');
@@ -133,8 +132,7 @@ const atuaizarCobranca = async (req, res) => {
         
         const valores = Object.values(body);
         valores.push(id);
-        valores.push(cliente.id);
-        const queryAtualizacao = `update cobrancas set ${params.join(', ')} where id = $${n} and cliente_id = $${n + 1}`;
+        const queryAtualizacao = `update cobrancas set ${params.join(', ')} where id = $${n}`;
         const cobrancaAtualizada = await conexao.query(queryAtualizacao, valores);
 
         if (cobrancaAtualizada.rowCount === 0) {
