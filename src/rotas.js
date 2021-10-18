@@ -31,7 +31,7 @@ rotas.put('/clientes/:id', clientes.atuaizarCliente);
 rotas.post('/cobrancas', cobrancas.cadastrarCobranca);
 rotas.get('/cobrancas', cobrancas.listarCobrancas);
 rotas.delete('/cobrancas/:id', cobrancas.excluirCobranca);
-
+rotas.put('/cobrancas/:id', cobrancas.atuaizarCobranca);
 
 
 

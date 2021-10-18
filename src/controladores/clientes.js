@@ -190,37 +190,11 @@ const atuaizarCliente = async (req, res) => {
 
 }
 
-const excluirCliente = async (req, res) => {
-    const { usuario } = req;
-    const { id } = req.params
-
-    try {
-        const query = 'select * from clientes where usuario_id = $1 and id = $2';
-        const { rowCount } = await conexao.query(query, [usuario.id, id]);
-
-        if (rowCount === 0) {
-            return res.status(404).json('Cliente não encontrado');
-        }
-
-        const produtoExcluido = await conexao.query('delete from clientes where id = $1', [id]);
-
-        if (produtoExcluido.rowCount === 0) {
-            return res.status(400).json('O cliente não foi excluido');
-        }
-
-        return res.status(200).json('Cliente excluido com sucesso');
-
-    } catch (error) {
-        return res.status(400).json(error.message);
-    }
-
-}
 
 
 module.exports = {
     listarClientes,
     obterCliente,
     cadastrarCliente,
-    atuaizarCliente,
-    excluirCliente
+    atuaizarCliente
 }
