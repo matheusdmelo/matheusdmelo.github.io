@@ -83,7 +83,7 @@ const atuaizarCobranca = async (req, res) => {
     const { id } = req.params;
     const {cliente_id, descricao, status, valor, vencimento} = req.body;
 
-    if(!cliente_id && !descricao && !status && !valor && !vencimento) {
+    if(!cliente_id && !descricao && status === null && !valor && !vencimento) {
         return res.status(404).json('Informe ao menos um campo para atualizar');
     }
     try {
