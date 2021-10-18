@@ -54,10 +54,37 @@ const cadastrarCobranca = async (req, res) => {
     }
 }
 
+const excluirCobranca = async (req, res) => {
+    const { cliente } = req;
+    const { id } = req.params
+
+    try {
+        const query = 'select * from cobrancas where cliente_id = $1 and id = $2';
+        const { rowCount } = await conexao.query(query, [cliente.id, id]);
+
+        if (rowCount === 0) {
+            return res.status(404).json('Cobrança não encontrada');
+        }
+
+        const cobrancaExcluida = await conexao.query('delete from cobrancas where id = $1', [id]);
+
+        if (cobrancaExcluida.rowCount === 0) {
+            return res.status(400).json('A cobrança não foi excluida');
+        }
+
+        return res.status(200).json('A cobrança foi excluida com sucesso');
+
+    } catch (error) {
+        return res.status(400).json(error.message);
+    }
+
+}
+
 
 
 
 module.exports = {
     cadastrarCobranca,
-    listarCobrancas
+    listarCobrancas,
+    excluirCobranca
 }; 
