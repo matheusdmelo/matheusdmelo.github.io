@@ -3,8 +3,26 @@ const conexao = require('../conexao');
 const listarCobrancas = async (req, res) => {
     const { usuario } = req;
 
+    const {orderNome, nome, cpf, email, id } = req.query
+
     try {
-        const query = 'select cobrancas.*, clientes.nome from cobrancas join clientes on clientes.id = cobrancas.cliente_id where clientes.usuario_id = $1';
+        let query = 'select cobrancas.*, clientes.nome from cobrancas join clientes on clientes.id = cobrancas.cliente_id where clientes.usuario_id = $1';
+        if (id) {
+            query += ` and id = ${id}`
+        }
+        if (email) {
+            query += ` and clientes.email = ${email}`
+        }
+        if (cpf) {
+            query += ` and clientes.cpf = ${cpf}`
+        }
+        if (nome) {
+            query += ` and clientes.nome = ${nome}`
+        }
+        if (orderNome) {
+            query += ` order by clientes.nome ${orderNome}`
+        } 
+        
         const { rows: cobrancas } = await conexao.query(query, [usuario.id]);
 
         return res.status(200).json(cobrancas);
@@ -111,7 +129,7 @@ const atuaizarCobranca = async (req, res) => {
             n++
         }
 
-        if (status) {
+        if (status !== null) {
             body.status = status;
             params.push(`status = $${n}`);
             n++
@@ -133,13 +151,14 @@ const atuaizarCobranca = async (req, res) => {
         const valores = Object.values(body);
         valores.push(id);
         const queryAtualizacao = `update cobrancas set ${params.join(', ')} where id = $${n}`;
+        console.log(queryAtualizacao);
         const cobrancaAtualizada = await conexao.query(queryAtualizacao, valores);
 
         if (cobrancaAtualizada.rowCount === 0) {
-            return res.status(400).json("O cliente não foi atualizado");
+            return res.status(400).json("A cobrança não foi atualizada");
         }
 
-        return res.status(200).json("O cliente foi atualizado com sucesso");
+        return res.status(200).json("A cobrança foi atualizada com sucesso");
 
         
 
