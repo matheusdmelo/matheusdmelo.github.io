@@ -35,7 +35,7 @@ const relatorioCobrancas = async (req, res) => {
         } else if (status === "vencidas") {
             query += ` and status = false and vencimento < current_date`
         }
-        //terminar relatorios, criar no imsomnia e listar nas rotas
+        
         const { rows: cobrancas } = await conexao.query(query, [usuario.id]);
 
         return res.status(200).json(cobrancas);

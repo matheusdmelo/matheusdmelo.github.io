@@ -24,7 +24,7 @@ const listarCobrancas = async (req, res) => {
         } 
         
         const { rows: cobrancas } = await conexao.query(query, [usuario.id]);
-
+        
         return res.status(200).json(cobrancas);
 
     } catch (error) {
